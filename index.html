@@ -19,10 +19,11 @@
       --canvas: #f3f5f2;
       --line: #dfe5dc;
       --shadow: 0 14px 34px rgba(20, 34, 22, .09);
+      --header-offset: 136px;
     }
 
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; scroll-padding-top: 136px; }
+    html { scroll-behavior: smooth; scroll-padding-top: var(--header-offset); }
     body {
       margin: 0;
       color: var(--ink);
@@ -86,9 +87,10 @@
       margin: 0 auto;
       padding: 9px 16px 10px;
       display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
       gap: 8px;
-      overflow-x: auto;
-      scrollbar-width: none;
+      overflow-x: visible;
     }
     .category-nav::-webkit-scrollbar { display: none; }
     .category-nav a {
@@ -302,12 +304,18 @@
       .combo-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 680px) {
-      html { scroll-padding-top: 132px; }
       .topbar-inner { min-height: 67px; width: calc(100% - 24px); }
       .brand img { width: 132px; }
       .header-actions .button:first-child { display: none; }
       .header-actions .button { min-height: 40px; padding: 8px 12px; font-size: .82rem; }
-      .category-nav { padding-left: 12px; padding-right: 12px; }
+      .category-nav {
+        padding-left: 12px;
+        padding-right: 12px;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
       main { width: min(100% - 24px, 1160px); margin-top: 16px; margin-bottom: 95px; }
       .hero { min-height: 0; grid-template-columns: 1fr; border-radius: 22px; }
       .hero-copy { order: 2; padding: 25px 22px 27px; }
@@ -539,6 +547,14 @@
 
     const nav = [{ id: "combos", title: "Combos" }, ...sections.map(section => ({ id: section.id, title: section.title }))];
     document.getElementById("category-nav").innerHTML = nav.map(item => `<a href="#${item.id}">${item.title}</a>`).join("");
+
+    const topbar = document.querySelector(".topbar");
+    const syncHeaderOffset = () => {
+      document.documentElement.style.setProperty("--header-offset", `${topbar.offsetHeight + 14}px`);
+    };
+    syncHeaderOffset();
+    window.addEventListener("resize", syncHeaderOffset, { passive: true });
+    if ("ResizeObserver" in window) new ResizeObserver(syncHeaderOffset).observe(topbar);
 
     document.getElementById("menu-sections").innerHTML = sections.map(section => `
       <section class="section" id="${section.id}" aria-labelledby="${section.id}-title">
