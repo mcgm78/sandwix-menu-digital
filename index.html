@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0d0c">
+  <meta name="description" content="Menu digital do SandwiX - Coffee Break, Lunch & Brunch. Torre X, 8.º Andar, Luanda.">
+  <title>Menu Digital | SandwiX</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <style>
+    :root {
+      --ink: #111412;
+      --muted: #667069;
+      --green: #65b526;
+      --green-dark: #2f6611;
+      --green-soft: #edf7e6;
+      --gold: #c9972f;
+      --paper: #ffffff;
+      --canvas: #f3f5f2;
+      --line: #dfe5dc;
+      --shadow: 0 14px 34px rgba(20, 34, 22, .09);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 136px; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 100% 0, rgba(101,181,38,.10), transparent 30rem),
+        var(--canvas);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    a { color: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+    .topbar-inner {
+      width: min(1160px, calc(100% - 32px));
+      min-height: 76px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .brand img {
+      display: block;
+      width: 172px;
+      height: auto;
+    }
+    .header-actions { display: flex; gap: 10px; }
+    .button {
+      min-height: 44px;
+      padding: 10px 15px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper);
+      text-decoration: none;
+      font-size: .9rem;
+      font-weight: 750;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+    .button:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(0,0,0,.08); }
+    .button.primary { color: #fff; background: var(--green-dark); border-color: var(--green-dark); }
+
+    .category-wrap {
+      border-top: 1px solid rgba(223,229,220,.7);
+      background: #fff;
+    }
+    .category-nav {
+      width: min(1160px, 100%);
+      margin: 0 auto;
+      padding: 9px 16px 10px;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .category-nav::-webkit-scrollbar { display: none; }
+    .category-nav a {
+      flex: 0 0 auto;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: #39413c;
+      background: #fff;
+      text-decoration: none;
+      font-size: .84rem;
+      font-weight: 700;
+    }
+    .category-nav a:first-child {
+      color: #fff;
+      background: var(--ink);
+      border-color: var(--ink);
+    }
+
+    main {
+      width: min(1160px, calc(100% - 32px));
+      margin: 28px auto 80px;
+    }
+    .hero {
+      overflow: hidden;
+      min-height: 326px;
+      display: grid;
+      grid-template-columns: 1.08fr .92fr;
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+    .hero-copy {
+      position: relative;
+      padding: clamp(30px, 5vw, 62px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      isolation: isolate;
+    }
+    .hero-copy::after {
+      content: "X";
+      position: absolute;
+      right: 22px;
+      bottom: -88px;
+      z-index: -1;
+      color: rgba(101,181,38,.08);
+      font-size: 18rem;
+      font-weight: 950;
+      line-height: 1;
+    }
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--green-dark);
+      font-size: .8rem;
+      font-weight: 850;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+    h1 {
+      max-width: 650px;
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.45rem, 6vw, 4.8rem);
+      font-weight: 500;
+      line-height: .96;
+      letter-spacing: -.045em;
+    }
+    .hero-text {
+      max-width: 570px;
+      margin: 22px 0 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+    .hero-meta {
+      margin-top: 26px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+    .pill {
+      padding: 8px 11px;
+      border-radius: 10px;
+      background: var(--green-soft);
+      color: var(--green-dark);
+      font-size: .82rem;
+      font-weight: 750;
+    }
+    .hero-image { min-height: 326px; background: #dce7df; }
+    .hero-image img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: center 40%; }
+
+    .section { padding-top: 42px; }
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 17px;
+    }
+    .section h2 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.85rem, 3vw, 2.55rem);
+      font-weight: 500;
+      line-height: 1.05;
+      letter-spacing: -.025em;
+    }
+    .section-kicker { margin: 5px 0 0; color: var(--muted); font-size: .88rem; }
+    .item-count { color: var(--muted); font-size: .82rem; font-weight: 700; white-space: nowrap; }
+
+    .combo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .combo-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 218px;
+      padding: 23px;
+      border-radius: 22px;
+      color: #fff;
+      background: var(--ink);
+      box-shadow: var(--shadow);
+    }
+    .combo-card::after {
+      content: "";
+      position: absolute;
+      right: -48px;
+      bottom: -48px;
+      width: 150px;
+      aspect-ratio: 1;
+      border: 28px solid rgba(101,181,38,.24);
+      border-radius: 50%;
+    }
+    .combo-number {
+      color: #b9e498;
+      font-size: .72rem;
+      font-weight: 850;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+    .combo-card h3 { margin: 8px 0 5px; font-size: 1.16rem; line-height: 1.2; }
+    .combo-card p { min-height: 44px; margin: 0; color: #d6ded8; font-size: .91rem; }
+    .combo-price { display: block; margin-top: 21px; color: #fff; font-size: 1.85rem; font-weight: 900; letter-spacing: -.04em; }
+    .combo-saving { color: #b9e498; font-size: .79rem; font-weight: 750; }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .menu-item {
+      min-height: 94px;
+      padding: 17px 18px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 18px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,.92);
+      transition: border-color .18s ease, transform .18s ease, box-shadow .18s ease;
+    }
+    .menu-item:hover {
+      transform: translateY(-1px);
+      border-color: rgba(101,181,38,.55);
+      box-shadow: 0 10px 24px rgba(31,58,22,.07);
+    }
+    .item-name { display: block; font-weight: 790; line-height: 1.28; }
+    .item-en { display: block; margin-top: 4px; color: var(--muted); font-size: .82rem; font-style: italic; line-height: 1.3; }
+    .price { color: var(--green-dark); font-size: 1rem; font-weight: 900; white-space: nowrap; }
+
+    .single-card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+    }
+
+    .visit {
+      margin-top: 54px;
+      padding: clamp(26px, 5vw, 50px);
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 30px;
+      align-items: center;
+      border-radius: 28px;
+      color: #fff;
+      background: linear-gradient(135deg, #111412, #203018);
+      box-shadow: var(--shadow);
+    }
+    .visit h2 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 500; line-height: 1; }
+    .visit p { margin: 13px 0 0; color: #d2dbd4; }
+    .visit-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; }
+    .visit .button { border-color: rgba(255,255,255,.18); background: rgba(255,255,255,.08); color: #fff; }
+    .visit .button.primary { background: var(--green); border-color: var(--green); color: #0d1608; }
+
+    footer {
+      padding: 0 20px 38px;
+      color: var(--muted);
+      text-align: center;
+      font-size: .82rem;
+    }
+
+    .floating-wa { display: none; }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr .74fr; }
+      .combo-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 680px) {
+      html { scroll-padding-top: 132px; }
+      .topbar-inner { min-height: 67px; width: calc(100% - 24px); }
+      .brand img { width: 132px; }
+      .header-actions .button:first-child { display: none; }
+      .header-actions .button { min-height: 40px; padding: 8px 12px; font-size: .82rem; }
+      .category-nav { padding-left: 12px; padding-right: 12px; }
+      main { width: min(100% - 24px, 1160px); margin-top: 16px; margin-bottom: 95px; }
+      .hero { min-height: 0; grid-template-columns: 1fr; border-radius: 22px; }
+      .hero-copy { order: 2; padding: 25px 22px 27px; }
+      .hero-copy::after { right: -5px; bottom: -53px; font-size: 11rem; }
+      .hero-image { order: 1; min-height: 178px; max-height: 208px; }
+      h1 { font-size: 2.65rem; }
+      .hero-text { margin-top: 14px; font-size: .92rem; }
+      .hero-meta { margin-top: 18px; }
+      .pill { font-size: .75rem; }
+      .section { padding-top: 34px; }
+      .section-heading { align-items: start; margin-bottom: 13px; }
+      .section h2 { font-size: 1.9rem; }
+      .item-count { padding-top: 5px; }
+      .combo-grid, .menu-grid { grid-template-columns: 1fr; }
+      .combo-card { min-height: 196px; padding: 20px; }
+      .menu-item { min-height: 84px; padding: 15px; gap: 12px; }
+      .item-name { font-size: .94rem; }
+      .item-en { font-size: .78rem; }
+      .price { font-size: .94rem; }
+      .visit { grid-template-columns: 1fr; padding: 28px 22px; border-radius: 22px; }
+      .visit-actions { justify-content: flex-start; }
+      .floating-wa {
+        position: fixed;
+        right: 16px;
+        bottom: calc(16px + env(safe-area-inset-bottom));
+        z-index: 60;
+        display: inline-flex;
+        min-height: 50px;
+        padding: 0 18px;
+        align-items: center;
+        border-radius: 999px;
+        color: #fff;
+        background: #237c39;
+        box-shadow: 0 12px 28px rgba(0,0,0,.22);
+        text-decoration: none;
+        font-size: .9rem;
+        font-weight: 850;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#inicio" aria-label="SandwiX - início">
+        <img src="logo.png" alt="SandwiX - Coffee Break, Lunch & Brunch, desde 2009">
+      </a>
+      <div class="header-actions">
+        <a class="button" href="tel:+244922788297">Ligar</a>
+        <a class="button primary" href="https://wa.me/244922788297?text=Ol%C3%A1%2C%20gostaria%20de%20fazer%20uma%20reserva%20no%20SandwiX." target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+    <div class="category-wrap">
+      <nav class="category-nav" id="category-nav" aria-label="Categorias do menu"></nav>
+    </div>
+  </header>
+
+  <main id="inicio">
+    <section class="hero" aria-labelledby="menu-title">
+      <div class="hero-copy">
+        <p class="eyebrow">Torre X · 8.º Andar</p>
+        <h1 id="menu-title">Menu SandwiX</h1>
+        <p class="hero-text">Coffee break, pequeno-almoço, lunch & brunch no coração de Luanda.</p>
+        <div class="hero-meta">
+          <span class="pill">Seg-Sex · 07:30-17:00</span>
+          <span class="pill">Desde 2009</span>
+          <span class="pill">Reservas: 922 788 297</span>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="restaurante-sandwix.jpg" alt="Sala do restaurante SandwiX na Torre X" width="765" height="850">
+      </div>
+    </section>
+
+    <section class="section" id="combos" aria-labelledby="combos-title">
+      <div class="section-heading">
+        <div>
+          <h2 id="combos-title">Combos SandwiX</h2>
+          <p class="section-kicker">Pequeno-almoço · preços especiais</p>
+        </div>
+        <span class="item-count">6 opções</span>
+      </div>
+      <div class="combo-grid" id="combo-grid"></div>
+    </section>
+
+    <div id="menu-sections"></div>
+
+    <section class="visit" aria-labelledby="visit-title">
+      <div>
+        <h2 id="visit-title">Suba ao 8.º andar.</h2>
+        <p>Rua Manuel Fernandes Caldeira, Edifício Torre X, Coqueiros, junto ao Hotel Continental.</p>
+      </div>
+      <div class="visit-actions">
+        <a class="button primary" href="https://wa.me/244922788297?text=Ol%C3%A1%2C%20gostaria%20de%20fazer%20uma%20reserva%20no%20SandwiX." target="_blank" rel="noopener">Reservar pelo WhatsApp</a>
+        <a class="button" href="https://www.google.com/maps/search/?api=1&query=Torre+X+Luanda" target="_blank" rel="noopener">Ver localização</a>
+        <a class="button" href="https://www.instagram.com/sandwix.angola/" target="_blank" rel="noopener">@sandwix.angola</a>
+      </div>
+    </section>
+  </main>
+
+  <a class="floating-wa" href="https://wa.me/244922788297?text=Ol%C3%A1%2C%20gostaria%20de%20fazer%20uma%20reserva%20no%20SandwiX." target="_blank" rel="noopener">WhatsApp</a>
+
+  <footer>
+    <p>SandwiX · Coffee Break, Lunch & Brunch · Desde 2009</p>
+    <p>Preços apresentados em Kwanzas (Kz).</p>
+  </footer>
+
+  <script>
+    const combos = [
+      { number: 1, name: "Café da Manhã", detail: "Café + Pastel de Nata", price: 2900, normal: 3350, saving: 450 },
+      { number: 2, name: "Doce SandwiX", detail: "Café + Queque", price: 2500, normal: 2850, saving: 350 },
+      { number: 3, name: "Clássico Misto", detail: "Meia de leite + Tosta Mista", price: 3900, normal: 4500, saving: 600 },
+      { number: 4, name: "Croissant Especial", detail: "Cappuccino + Croissant Misto", price: 4900, normal: 5500, saving: 600 },
+      { number: 5, name: "Natural SandwiX", detail: "Sumo natural de laranja + Merenda", price: 6500, normal: 7000, saving: 500 },
+      { number: 6, name: "Natural SandwiX 2", detail: "Sumo natural (limão, maracujá, etc.) + Merenda", price: 4900, normal: 5500, saving: 600 }
+    ];
+
+    const sections = [
+      { id: "pequeno-almoco", title: "Pequeno-almoço", subtitle: "Breakfast", items: [
+        ["Ovos estrelados, mexidos ou omelete simples com pão", "Fried eggs, scrambled eggs or plain omelette with bread", 3000],
+        ["Brunch - bebidas quentes e acompanhamentos", "Brunch with hot drinks and side dishes", 7300],
+        ["Brunch - sumos naturais e acompanhamentos", "Brunch with fresh juices and side dishes", 14500],
+        ["Torradas", "Toast", 1800],
+        ["Pão de leite misto", "Mixed milk bread", 3500],
+        ["Croissant misto", "Ham and cheese croissant", 3500]
+      ]},
+      { id: "sopas", title: "Sopas & cremes", subtitle: "Soups & creams", items: [
+        ["Sopa de feijão", "Bean soup", 3000], ["Caldo verde", "Green broth", 3000],
+        ["Canja", "Chicken soup", 3000], ["Creme de abóbora", "Pumpkin cream", 3000],
+        ["Creme de ervilha", "Pea cream", 3000], ["Creme de cenoura", "Carrot cream", 3000]
+      ]},
+      { id: "pastelaria", title: "Pastelaria variada", subtitle: "Assorted pastries", items: [
+        ["Queques, tranças, caracol e bolo caseiro", "Cupcakes, braids, snails and homemade cake", 2000],
+        ["Fatia de bolo especial", "Special slice of cake", 4000],
+        ["Pastel de nata", "Custard tart", 2000],
+        ["Salgados diversos (unidade)", "Assorted savoury snacks (each)", 1200],
+        ["Salgados folhados - merenda mista e pão de chouriço", "Puff pastries - ham and cheese pastry or chorizo bread", 1800]
+      ]},
+      { id: "entradas", title: "Entradas quentes", subtitle: "Hot appetizers", items: [
+        ["Choco frito", "Fried cuttlefish", 7000],
+        ["Camarão ao alho com gengibre", "Garlic prawns with ginger", 8000],
+        ["Tempura de frango com molho de maracujá", "Chicken tempura with passion fruit sauce", 5500],
+        ["Pica-pau do lombo", "Tenderloin pica-pau", 8500]
+      ]},
+      { id: "saladas", title: "Saladas", subtitle: "Salads", items: [
+        ["Salada grega", "Greek salad", 7150], ["Salada atlântica", "Atlantic salad", 7550], ["Salada de frango", "Chicken salad", 7150]
+      ]},
+      { id: "vegetariano", title: "Vegetariano", subtitle: "Vegetarian", items: [
+        ["Linguine de legumes salteados", "Linguine with sautéed vegetables", 9100]
+      ]},
+      { id: "sanduiches", title: "Sanduíches & tostas", subtitle: "Sandwiches & toasties", items: [
+        ["Sanduíche de queijo e manteiga", "Cheese and butter sandwich", 3300],
+        ["Sanduíche de fiambre e manteiga", "Ham and butter sandwich", 3300],
+        ["Sanduíche de presunto e manteiga", "Cured ham and butter sandwich", 3800],
+        ["Sanduíche de fiambre, queijo e manteiga", "Ham, cheese and butter sandwich", 3750],
+        ["Sanduíche de chourição, queijo e manteiga", "Salami, cheese and butter sandwich", 3750],
+        ["Sanduíche de presunto, queijo e manteiga", "Cured ham, cheese and butter sandwich", 4000],
+        ["Sanduíche com pasta de atum", "Tuna spread sandwich", 3600],
+        ["Sanduíche vegetariana", "Vegetarian sandwich", 3500],
+        ["Sanduíche Club", "Club sandwich", 4300],
+        ["Sanduíche Mwangolé", "Mwangolé sandwich", 3850],
+        ["Sanduíche de omelete", "Omelette sandwich", 3000],
+        ["Sanduíche de omelete com chouriço", "Omelette and chorizo sandwich", 3400],
+        ["Sanduíche Mata-Bicho I & II", "Breakfast sandwich I & II", 3950],
+        ["Sanduíche de frango", "Chicken sandwich", 4200],
+        ["Sanduíche de frango panado", "Breaded chicken sandwich", 4450],
+        ["Sanduíche tostada de frango", "Toasted chicken sandwich", 5500],
+        ["Sanduíche de carne assada", "Roast beef sandwich", 5000],
+        ["Sanduíche de leitão", "Suckling pig sandwich", 6750],
+        ["Prego no pão", "Steak sandwich", 6000],
+        ["Prego no pão com ovo", "Steak sandwich with egg", 6350],
+        ["Tosta de queijo ou fiambre", "Cheese or ham toasted sandwich", 3200],
+        ["Tosta mista", "Ham and cheese toasted sandwich", 3600],
+        ["Tosta de atum", "Toasted tuna sandwich", 3600],
+        ["Tosta de frango", "Toasted chicken sandwich", 4100],
+        ["Sanduíche tripla (atum, frango ou Club) + batata frita", "Triple sandwich (tuna, chicken or Club) + French fries", 5000]
+      ]},
+      { id: "hamburgueres", title: "Hambúrgueres", subtitle: "Burgers", items: [
+        ["Hambúrguer de peixe + batata frita", "Fish burger + French fries", 6900],
+        ["Hambúrguer de frango + batata frita", "Chicken burger + French fries", 6900],
+        ["Hambúrguer americano + batata frita", "American burger + French fries", 7500]
+      ]},
+      { id: "snacks", title: "Snacks", subtitle: "Snacks", items: [
+        ["Filete de peixe", "Fish fillet", 8500], ["Peito de frango grelhado", "Grilled chicken breast", 8500],
+        ["Panado de frango no prato", "Breaded chicken fillet", 8500], ["Prego no prato", "Steak plate", 9000]
+      ]},
+      { id: "peixes", title: "Peixes", subtitle: "Fish", items: [
+        ["Risoto de bacalhau", "Cod risotto", 13200], ["Tranche de garoupa com camarão", "Grouper steak with prawns", 16500]
+      ]},
+      { id: "carnes", title: "Carnes", subtitle: "Meat", items: [
+        ["Esparguete à carbonara", "Spaghetti carbonara", 9100], ["Picanha à brasileira", "Brazilian picanha", 14500],
+        ["Tornedó com bacon e molho de três pimentas", "Tournedos with bacon and three-pepper sauce", 16900]
+      ]},
+      { id: "pizzas", title: "Pizzas", subtitle: "Tamanho médio · Medium size", items: [
+        ["Pizza margherita", "Margherita pizza", 11000], ["Pizza de fiambre e queijo", "Ham and cheese pizza", 12500],
+        ["Pizza de atum e queijo", "Tuna and cheese pizza", 13800]
+      ]},
+      { id: "sobremesas", title: "Sobremesas do dia", subtitle: "Desserts of the day", items: [
+        ["Delícia de bolacha", "Biscuit delight", 3100], ["Mousse de chocolate", "Chocolate mousse", 3300],
+        ["Salada de frutas", "Fruit salad", 2500], ["Fruta laminada", "Sliced fruit", 2500], ["Peça de fruta", "Piece of fruit", 1500]
+      ]},
+      { id: "extras", title: "Extras", subtitle: "Extras", items: [
+        ["Alface", "Lettuce", 400], ["Cebola", "Onion", 400], ["Cenoura", "Carrot", 400], ["Tomate", "Tomato", 400],
+        ["Ovo", "Egg", 600], ["Queijo flamengo", "Flamengo cheese", 1150], ["Queijo fresco", "Fresh cheese", 1000],
+        ["Queijo feta", "Feta cheese", 1400], ["Queijo brie", "Brie cheese", 1000], ["Fiambre", "Ham", 600],
+        ["Bacon", "Bacon", 1150], ["Peru fumado", "Smoked turkey", 800], ["Salsicha", "Sausage", 500],
+        ["Peito de frango", "Chicken breast", 750], ["Atum", "Tuna", 750]
+      ]},
+      { id: "couvert", title: "Couvert", subtitle: "Couvert", items: [
+        ["Pão, manteiga, paté e azeitonas temperadas", "Bread, butter, pâté and seasoned olives", 1500]
+      ]}
+    ];
+
+    const money = value => `${new Intl.NumberFormat("pt-PT").format(value)} Kz`;
+
+    document.getElementById("combo-grid").innerHTML = combos.map(combo => `
+      <article class="combo-card">
+        <span class="combo-number">Combo ${combo.number}</span>
+        <h3>${combo.name}</h3>
+        <p>${combo.detail}</p>
+        <strong class="combo-price">${money(combo.price)}</strong>
+        <span class="combo-saving">Preço normal: ${money(combo.normal)} · Poupa ${money(combo.saving)}</span>
+      </article>
+    `).join("");
+
+    const nav = [{ id: "combos", title: "Combos" }, ...sections.map(section => ({ id: section.id, title: section.title }))];
+    document.getElementById("category-nav").innerHTML = nav.map(item => `<a href="#${item.id}">${item.title}</a>`).join("");
+
+    document.getElementById("menu-sections").innerHTML = sections.map(section => `
+      <section class="section" id="${section.id}" aria-labelledby="${section.id}-title">
+        <div class="section-heading">
+          <div>
+            <h2 id="${section.id}-title">${section.title}</h2>
+            <p class="section-kicker">${section.subtitle}</p>
+          </div>
+          <span class="item-count">${section.items.length} ${section.items.length === 1 ? "opção" : "opções"}</span>
+        </div>
+        <div class="menu-grid">
+          ${section.items.map(item => `
+            <article class="menu-item">
+              <div>
+                <span class="item-name">${item[0]}</span>
+                <span class="item-en" lang="en">${item[1]}</span>
+              </div>
+              <span class="price">${money(item[2])}</span>
+            </article>
+          `).join("")}
+        </div>
+      </section>
+    `).join("");
+  </script>
+</body>
+</html>
