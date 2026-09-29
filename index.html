@@ -264,6 +264,64 @@
     .item-name { display: block; font-weight: 790; line-height: 1.28; }
     .item-en { display: block; margin-top: 4px; color: var(--muted); font-size: .82rem; font-style: italic; line-height: 1.3; }
     .price { color: var(--green-dark); font-size: 1rem; font-weight: 900; white-space: nowrap; }
+    .menu-item-details {
+      min-height: 0;
+      padding: 0;
+      display: block;
+      overflow: hidden;
+    }
+    .menu-item-details summary {
+      min-height: 94px;
+      padding: 17px 18px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 18px;
+      cursor: pointer;
+      list-style: none;
+    }
+    .menu-item-details summary::-webkit-details-marker { display: none; }
+    .item-side { display: flex; align-items: center; gap: 10px; }
+    .expand-icon {
+      width: 26px;
+      height: 26px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      color: var(--green-dark);
+      background: var(--green-soft);
+      font-size: 1.15rem;
+      font-weight: 800;
+      line-height: 1;
+      transition: transform .18s ease, color .18s ease, background .18s ease;
+    }
+    .menu-item-details[open] {
+      border-color: rgba(101,181,38,.55);
+      box-shadow: 0 10px 24px rgba(31,58,22,.07);
+    }
+    .menu-item-details[open] .expand-icon {
+      transform: rotate(45deg);
+      color: #fff;
+      background: var(--green-dark);
+    }
+    .composition {
+      padding: 14px 18px 17px;
+      border-top: 1px solid var(--line);
+      color: #38413b;
+      background: var(--green-soft);
+      font-size: .88rem;
+      line-height: 1.45;
+    }
+    .composition strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--green-dark);
+      font-size: .74rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
 
     .single-card {
       padding: 18px;
@@ -332,6 +390,9 @@
       .combo-grid, .menu-grid { grid-template-columns: 1fr; }
       .combo-card { min-height: 196px; padding: 20px; }
       .menu-item { min-height: 84px; padding: 15px; gap: 12px; }
+      .menu-item-details { min-height: 0; padding: 0; }
+      .menu-item-details summary { min-height: 84px; padding: 15px; gap: 12px; }
+      .composition { padding: 13px 15px 15px; }
       .item-name { font-size: .94rem; }
       .item-en { font-size: .78rem; }
       .price { font-size: .94rem; }
@@ -470,32 +531,32 @@
       { id: "vegetariano", title: "Vegetariano", subtitle: "Vegetarian", items: [
         ["Linguine de legumes salteados", "Linguine with sautéed vegetables", 9100]
       ]},
-      { id: "sanduiches", title: "Sanduíches & tostas", subtitle: "Sandwiches & toasties", items: [
-        ["Sanduíche de queijo e manteiga", "Cheese and butter sandwich", 3300],
-        ["Sanduíche de fiambre e manteiga", "Ham and butter sandwich", 3300],
-        ["Sanduíche de presunto e manteiga", "Cured ham and butter sandwich", 3800],
-        ["Sanduíche de fiambre, queijo e manteiga", "Ham, cheese and butter sandwich", 3750],
-        ["Sanduíche de chourição, queijo e manteiga", "Salami, cheese and butter sandwich", 3750],
-        ["Sanduíche de presunto, queijo e manteiga", "Cured ham, cheese and butter sandwich", 4000],
-        ["Sanduíche com pasta de atum", "Tuna spread sandwich", 3600],
-        ["Sanduíche vegetariana", "Vegetarian sandwich", 3500],
-        ["Sanduíche Club", "Club sandwich", 4300],
-        ["Sanduíche Mwangolé", "Mwangolé sandwich", 3850],
-        ["Sanduíche de omelete", "Omelette sandwich", 3000],
-        ["Sanduíche de omelete com chouriço", "Omelette and chorizo sandwich", 3400],
-        ["Sanduíche Mata-Bicho I & II", "Breakfast sandwich I & II", 3950],
-        ["Sanduíche de frango", "Chicken sandwich", 4200],
-        ["Sanduíche de frango panado", "Breaded chicken sandwich", 4450],
-        ["Sanduíche tostada de frango", "Toasted chicken sandwich", 5500],
-        ["Sanduíche de carne assada", "Roast beef sandwich", 5000],
-        ["Sanduíche de leitão", "Suckling pig sandwich", 6750],
-        ["Prego no pão", "Steak sandwich", 6000],
-        ["Prego no pão com ovo", "Steak sandwich with egg", 6350],
-        ["Tosta de queijo ou fiambre", "Cheese or ham toasted sandwich", 3200],
-        ["Tosta mista", "Ham and cheese toasted sandwich", 3600],
-        ["Tosta de atum", "Toasted tuna sandwich", 3600],
-        ["Tosta de frango", "Toasted chicken sandwich", 4100],
-        ["Sanduíche tripla (atum, frango ou Club) + batata frita", "Triple sandwich (tuna, chicken or Club) + French fries", 5000]
+      { id: "sanduiches", title: "Sanduíches & tostas", subtitle: "Clique para ver a composição", items: [
+        ["Sanduíche de queijo e manteiga", "Cheese and butter sandwich", 3300, "Pão baguete, 3 fatias de queijo e manteiga."],
+        ["Sanduíche de fiambre e manteiga", "Ham and butter sandwich", 3300, "Pão baguete, 3 fatias de fiambre e manteiga."],
+        ["Sanduíche de presunto e manteiga", "Cured ham and butter sandwich", 3800, "Pão baguete, 3 fatias de presunto e manteiga."],
+        ["Sanduíche de fiambre, queijo e manteiga", "Ham, cheese and butter sandwich", 3750, "Pão baguete, 3 fatias de fiambre, 3 fatias de queijo e manteiga."],
+        ["Sanduíche de chourição, queijo e manteiga", "Salami, cheese and butter sandwich", 3750, "Pão baguete, 4 fatias de chourição, 3 fatias de queijo e manteiga."],
+        ["Sanduíche de presunto, queijo e manteiga", "Cured ham, cheese and butter sandwich", 4000, "Pão baguete, 3 fatias de presunto, 3 fatias de queijo e manteiga."],
+        ["Sanduíche com pasta de atum", "Tuna spread sandwich", 3600, "Pão baguete, pasta de atum, 3 folhas de alface, 4 rodelas de tomate e 1 ovo cozido."],
+        ["Sanduíche vegetariana", "Vegetarian sandwich", 3500, "Pão baguete, 3 fatias de beringela, cenoura ralada, milho, molho de ervas e maionese."],
+        ["Sanduíche Club", "Club sandwich", 4300, "Pão baguete, 3 folhas de alface, 4 rodelas de tomate, 3 fatias de queijo, 3 fatias de peru fumado, 3 fatias de bacon e maionese."],
+        ["Sanduíche Mwangolé", "Mwangolé sandwich", 3850, "Pão baguete, 2 ovos estrelados, 4 tiras de chouriço assado e maionese."],
+        ["Sanduíche de omelete", "Omelette sandwich", 3000, "Pão baguete, omelete de salsa e cebola e maionese."],
+        ["Sanduíche de omelete com chouriço", "Omelette and chorizo sandwich", 3400, "Pão baguete, omelete de chouriço e maionese."],
+        ["Sanduíche Mata-Bicho I & II", "Breakfast sandwich I & II", 3950, "Mata-Bicho I: pão baguete, omelete, 3 fatias de queijo, 3 fatias de bacon e maionese. Mata-Bicho II: pão baguete, omelete, 3 fatias de queijo, 2 salsichas e maionese."],
+        ["Sanduíche de frango", "Chicken sandwich", 4200, "Pão baguete, 3 folhas de alface, 4 rodelas de tomate, 3 bifes de frango, cenoura ralada, milho e maionese."],
+        ["Sanduíche de frango panado", "Breaded chicken sandwich", 4450, "Pão baguete, 3 folhas de alface, 2 panados de frango e maionese."],
+        ["Sanduíche tostada de frango", "Toasted chicken sandwich", 5500, "Pão baguete, 3 bifes de frango grelhado, 3 fatias de bacon, 3 tiras de queijo brie e maionese."],
+        ["Sanduíche de carne assada", "Roast pork sandwich", 5000, "Pão baguete, 3 folhas de alface, 3 fatias de lombo de porco, mostarda, pickles e maionese."],
+        ["Sanduíche de leitão", "Suckling pig sandwich", 6750, "Pão baguete, leitão e maionese."],
+        ["Prego no pão", "Steak sandwich", 6000, "Pão baguete, bife do lombo de vaca e maionese."],
+        ["Prego no pão com ovo", "Steak sandwich with egg", 6350, "Pão baguete, bife do lombo de vaca, 2 ovos estrelados e maionese."],
+        ["Tosta de queijo ou fiambre", "Cheese or ham toasted sandwich", 3200, "Pão tostado com queijo ou fiambre."],
+        ["Tosta mista", "Ham and cheese toasted sandwich", 3600, "Pão tostado, queijo e fiambre."],
+        ["Tosta de atum", "Toasted tuna sandwich", 3600, "Pão tostado e pasta de atum."],
+        ["Tosta de frango", "Toasted chicken sandwich", 4100, "Pão tostado, frango e maionese."],
+        ["Sanduíche tripla (atum, frango ou Club) + batata frita", "Triple sandwich (tuna, chicken or Club) + French fries", 5000, "Recheio à escolha: atum, frango ou Club, preparado segundo a respetiva composição. Acompanha batata frita."]
       ]},
       { id: "hamburgueres", title: "Hambúrgueres", subtitle: "Burgers", items: [
         ["Hambúrguer de peixe + batata frita", "Fish burger + French fries", 6900],
@@ -566,7 +627,24 @@
           <span class="item-count">${section.items.length} ${section.items.length === 1 ? "opção" : "opções"}</span>
         </div>
         <div class="menu-grid">
-          ${section.items.map(item => `
+          ${section.items.map(item => item[3] ? `
+            <details class="menu-item menu-item-details">
+              <summary aria-label="${item[0]}: mostrar composição">
+                <span>
+                  <span class="item-name">${item[0]}</span>
+                  <span class="item-en" lang="en">${item[1]}</span>
+                </span>
+                <span class="item-side">
+                  <span class="price">${money(item[2])}</span>
+                  <span class="expand-icon" aria-hidden="true">+</span>
+                </span>
+              </summary>
+              <div class="composition">
+                <strong>Composição</strong>
+                ${item[3]}
+              </div>
+            </details>
+          ` : `
             <article class="menu-item">
               <div>
                 <span class="item-name">${item[0]}</span>
