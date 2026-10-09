@@ -355,6 +355,103 @@
       font-size: .82rem;
     }
 
+    body.modal-open { overflow: hidden; }
+    .buffet-modal[hidden] { display: none; }
+    .buffet-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      padding: 18px;
+      display: grid;
+      place-items: center;
+      background: rgba(8, 14, 9, .76);
+      backdrop-filter: blur(6px);
+    }
+    .buffet-dialog {
+      position: relative;
+      overflow: auto;
+      width: min(540px, 100%);
+      max-height: calc(100vh - 36px);
+      padding: 28px;
+      border: 1px solid rgba(101,181,38,.45);
+      border-radius: 26px;
+      color: var(--ink);
+      background: #fff;
+      box-shadow: 0 28px 80px rgba(0,0,0,.34);
+    }
+    .buffet-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 38px;
+      height: 38px;
+      border: 0;
+      border-radius: 50%;
+      color: #fff;
+      background: var(--ink);
+      cursor: pointer;
+      font-size: 1.35rem;
+      line-height: 1;
+    }
+    .buffet-kicker {
+      margin: 0 48px 5px 0;
+      color: var(--green-dark);
+      font-size: .76rem;
+      font-weight: 850;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .buffet-dialog h2 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2rem, 7vw, 3rem);
+      font-weight: 500;
+      line-height: 1;
+    }
+    .buffet-price-row {
+      margin: 18px 0;
+      padding: 13px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border-radius: 15px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--green-dark), #173c0a);
+    }
+    .buffet-price-row span { font-size: .82rem; font-weight: 750; }
+    .buffet-price-row strong { color: #f4dc3e; font-size: 1.55rem; white-space: nowrap; }
+    .buffet-options { margin: 0; padding: 0; display: grid; gap: 9px; list-style: none; }
+    .buffet-options li {
+      padding: 11px 13px;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 11px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fbfcfa;
+      font-weight: 760;
+      line-height: 1.25;
+    }
+    .buffet-option-number {
+      width: 28px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: #fff;
+      background: var(--green-dark);
+      font-size: .78rem;
+      font-weight: 900;
+    }
+    .buffet-sides-title { margin: 17px 0 8px; color: var(--green-dark); font-size: .82rem; font-weight: 850; text-transform: uppercase; }
+    .buffet-sides { margin: 0; color: var(--muted); font-size: .88rem; line-height: 1.5; }
+    .buffet-actions { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 10px; }
+    .buffet-actions .button { flex: 1 1 190px; }
+    .buffet-actions button.button { cursor: pointer; font: inherit; }
+
     .floating-wa { display: none; }
 
     @media (max-width: 900px) {
@@ -396,6 +493,11 @@
       .item-name { font-size: .94rem; }
       .item-en { font-size: .78rem; }
       .price { font-size: .94rem; }
+      .buffet-modal { padding: 10px; }
+      .buffet-dialog { max-height: calc(100vh - 20px); padding: 24px 18px 19px; border-radius: 20px; }
+      .buffet-price-row { margin: 15px 0; }
+      .buffet-options { gap: 7px; }
+      .buffet-options li { padding: 9px 11px; font-size: .9rem; }
       .visit { grid-template-columns: 1fr; padding: 28px 22px; border-radius: 22px; }
       .visit-actions { justify-content: flex-start; }
       .floating-wa {
@@ -487,6 +589,29 @@
     <p>SandwiX · Coffee Break, Lunch & Brunch · Desde 2009</p>
     <p>Preços apresentados em Kwanzas (Kz).</p>
   </footer>
+
+  <div class="buffet-modal" id="buffet-modal" hidden>
+    <div class="buffet-dialog" role="dialog" aria-modal="true" aria-labelledby="buffet-title" aria-describedby="buffet-description">
+      <button class="buffet-close" type="button" data-close-buffet aria-label="Fechar menu do dia">×</button>
+      <p class="buffet-kicker">Buffet do dia · 09/10/2026</p>
+      <h2 id="buffet-title">Hoje no SandwiX</h2>
+      <div class="buffet-price-row">
+        <span>Opção de refeição</span>
+        <strong>8.500 Kz</strong>
+      </div>
+      <ul class="buffet-options" id="buffet-description">
+        <li><span class="buffet-option-number">1</span><span>Posta de corvina com molho de camarão</span></li>
+        <li><span class="buffet-option-number">2</span><span>Moamba de galinha rija</span></li>
+        <li><span class="buffet-option-number">3</span><span>Entrecosto grelhado</span></li>
+      </ul>
+      <p class="buffet-sides-title">Duas guarnições à escolha</p>
+      <p class="buffet-sides">Arroz branco · Salada do dia · Legumes salteados · Funge misto · Batata frita · Batata-doce</p>
+      <div class="buffet-actions">
+        <button class="button" type="button" data-close-buffet>Ver menu completo</button>
+        <a class="button primary" href="https://wa.me/244922788297?text=Ol%C3%A1%2C%20gostaria%20de%20reservar%20uma%20refei%C3%A7%C3%A3o%20do%20buffet%20de%20hoje." target="_blank" rel="noopener">Reservar pelo WhatsApp</a>
+      </div>
+    </div>
+  </div>
 
   <script>
     const combos = [
@@ -595,6 +720,37 @@
     ];
 
     const money = value => `${new Intl.NumberFormat("pt-PT").format(value)} Kz`;
+
+    const buffetDate = "2026-10-09";
+    const buffetModal = document.getElementById("buffet-modal");
+    const dateParts = Object.fromEntries(
+      new Intl.DateTimeFormat("en-GB", {
+        timeZone: "Africa/Luanda",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+      }).formatToParts(new Date()).filter(part => part.type !== "literal").map(part => [part.type, part.value])
+    );
+    const todayInLuanda = `${dateParts.year}-${dateParts.month}-${dateParts.day}`;
+    const buffetDismissedKey = `sandwix-buffet-${buffetDate}`;
+    let buffetWasDismissed = false;
+    try { buffetWasDismissed = localStorage.getItem(buffetDismissedKey) === "dismissed"; } catch (_) {}
+
+    const closeBuffet = () => {
+      buffetModal.hidden = true;
+      document.body.classList.remove("modal-open");
+      try { localStorage.setItem(buffetDismissedKey, "dismissed"); } catch (_) {}
+    };
+
+    if (todayInLuanda === buffetDate && !buffetWasDismissed) {
+      buffetModal.hidden = false;
+      document.body.classList.add("modal-open");
+      buffetModal.querySelector(".buffet-close").focus();
+    }
+
+    buffetModal.querySelectorAll("[data-close-buffet]").forEach(button => button.addEventListener("click", closeBuffet));
+    buffetModal.addEventListener("click", event => { if (event.target === buffetModal) closeBuffet(); });
+    document.addEventListener("keydown", event => { if (event.key === "Escape" && !buffetModal.hidden) closeBuffet(); });
 
     document.getElementById("combo-grid").innerHTML = combos.map(combo => `
       <article class="combo-card">
