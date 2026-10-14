@@ -593,19 +593,19 @@
   <div class="buffet-modal" id="buffet-modal" hidden>
     <div class="buffet-dialog" role="dialog" aria-modal="true" aria-labelledby="buffet-title" aria-describedby="buffet-description">
       <button class="buffet-close" type="button" data-close-buffet aria-label="Fechar menu do dia">×</button>
-      <p class="buffet-kicker">Buffet do dia · 13/10/2026</p>
+      <p class="buffet-kicker">Buffet do dia · 14/10/2026</p>
       <h2 id="buffet-title">Hoje no SandwiX</h2>
       <div class="buffet-price-row">
         <span>Opção de refeição</span>
         <strong>8.500 Kz</strong>
       </div>
       <ul class="buffet-options" id="buffet-description">
-        <li><span class="buffet-option-number">1</span><span>Secretos de porco</span></li>
-        <li><span class="buffet-option-number">2</span><span>Bacalhau à Gomes de Sá</span></li>
-        <li><span class="buffet-option-number">3</span><span>Bife de frango</span></li>
+        <li><span class="buffet-option-number">1</span><span>Frango teriyaki</span></li>
+        <li><span class="buffet-option-number">2</span><span>Lírio no forno</span></li>
+        <li><span class="buffet-option-number">3</span><span>Tiras de choco</span></li>
       </ul>
       <p class="buffet-sides-title">Duas guarnições à escolha</p>
-      <p class="buffet-sides">Arroz branco · Salada do dia · Legumes do dia · Cuscuz · Batata frita</p>
+      <p class="buffet-sides">Arroz branco · Salada do dia · Legumes do dia · Arroz chau-chau · Batata assada · Salada de grão</p>
       <div class="buffet-actions">
         <button class="button" type="button" data-close-buffet>Ver menu completo</button>
         <a class="button primary" href="https://wa.me/244922788297?text=Ol%C3%A1%2C%20gostaria%20de%20reservar%20uma%20refei%C3%A7%C3%A3o%20do%20buffet%20de%20hoje." target="_blank" rel="noopener">Reservar pelo WhatsApp</a>
@@ -721,7 +721,7 @@
 
     const money = value => `${new Intl.NumberFormat("pt-PT").format(value)} Kz`;
 
-    const buffetDate = "2026-10-13";
+    const buffetDate = "2026-10-14";
     const buffetModal = document.getElementById("buffet-modal");
     const dateParts = Object.fromEntries(
       new Intl.DateTimeFormat("en-GB", {
