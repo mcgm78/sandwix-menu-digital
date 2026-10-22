@@ -593,19 +593,19 @@
   <div class="buffet-modal" id="buffet-modal" hidden>
     <div class="buffet-dialog" role="dialog" aria-modal="true" aria-labelledby="buffet-title" aria-describedby="buffet-description">
       <button class="buffet-close" type="button" data-close-buffet aria-label="Fechar menu do dia">×</button>
-      <p class="buffet-kicker">Buffet do dia · 22/10/2026</p>
+      <p class="buffet-kicker" id="buffet-date">Buffet do dia · 22/10/2026</p>
       <h2 id="buffet-title">Hoje no SandwiX</h2>
       <div class="buffet-price-row">
         <span>Opção de refeição</span>
-        <strong>8.500 Kz</strong>
+        <strong id="buffet-price">8.500 Kz</strong>
       </div>
       <ul class="buffet-options" id="buffet-description">
         <li><span class="buffet-option-number">1</span><span>Lasanha de carne</span></li>
         <li><span class="buffet-option-number">2</span><span>Choco grelhado</span></li>
         <li><span class="buffet-option-number">3</span><span>Espetada de peixe</span></li>
       </ul>
-      <p class="buffet-sides-title">Duas guarnições à escolha</p>
-      <p class="buffet-sides">Arroz branco · Salada do dia · Legumes do dia · Batata frita · Batata doce · Brócolis</p>
+      <p class="buffet-sides-title" id="buffet-sides-title">Duas guarnições à escolha</p>
+      <p class="buffet-sides" id="buffet-sides">Arroz branco · Salada do dia · Legumes do dia · Batata frita · Batata doce · Brócolis</p>
       <div class="buffet-actions">
         <button class="button" type="button" data-close-buffet>Ver menu completo</button>
         <a class="button primary" href="https://wa.me/244922788297?text=Ol%C3%A1%2C%20gostaria%20de%20reservar%20uma%20refei%C3%A7%C3%A3o%20do%20buffet%20de%20hoje." target="_blank" rel="noopener">Reservar pelo WhatsApp</a>
@@ -721,7 +721,193 @@
 
     const money = value => `${new Intl.NumberFormat("pt-PT").format(value)} Kz`;
 
-    const buffetDate = "2026-10-22";
+    const buffetMenus = {
+          "2026-10-22": {
+                "options": [
+                      "Lasanha de carne",
+                      "Choco grelhado",
+                      "Espetada de peixe"
+                ],
+                "sidesTitle": "Duas guarnições à escolha",
+                "sides": "Arroz branco · Salada do dia · Legumes do dia · Batata frita · Batata doce · Brócolis"
+          },
+          "2026-10-23": {
+                "options": [
+                      "Entrecosto BBQ com batata frita e coleslaw",
+                      "Calulu de peixe com feijão de óleo de palma",
+                      "Bife de novilho com puré de ervilha e espinafres"
+                ]
+          },
+          "2026-10-26": {
+                "options": [
+                      "Caril de frango",
+                      "Calafate grelhado com batata cozida e legumes",
+                      "Espetada de carne com puré de abóbora e beringela salteada"
+                ]
+          },
+          "2026-10-27": {
+                "options": [
+                      "Feijoada da casa com arroz branco",
+                      "Coxa de frango à cervejeira com arroz de ervilhas",
+                      "Posta de garoupa ao forno com batata e legumes"
+                ]
+          },
+          "2026-10-28": {
+                "options": [
+                      "Frango no forno com arroz de legumes",
+                      "Caldeirada de peixe com arroz branco",
+                      "Febras na chapa com mandioca e salada de beterraba"
+                ]
+          },
+          "2026-10-29": {
+                "options": [
+                      "Cabrito assado com batata à padeiro e legumes",
+                      "Bife de atum acebolado com batata a vapor e salada",
+                      "Bife de frango com molho de cogumelos e natas"
+                ]
+          },
+          "2026-10-30": {
+                "options": [
+                      "Bacalhau com natas",
+                      "Bitoque de novilho com ovo e batata frita",
+                      "Coxa de frango no forno com batata-doce e legumes"
+                ]
+          },
+          "2026-11-03": {
+                "options": [
+                      "Carne estufada com arroz branco",
+                      "Corvina à lagareiro com batata a murro e grelos",
+                      "Coxa de frango grelhada com cuscuz e legumes"
+                ]
+          },
+          "2026-11-04": {
+                "options": [
+                      "Arroz de pato com salada mista",
+                      "Choco grelhado com batata a murro e salada de pimentos",
+                      "Peixe grelhado com salada de feijão-frade"
+                ]
+          },
+          "2026-11-05": {
+                "options": [
+                      "Jardineira com arroz branco",
+                      "Bifinhos de porco com molho de mostarda e batata gratinada",
+                      "Bacalhau à Gomes de Sá"
+                ]
+          },
+          "2026-11-06": {
+                "options": [
+                      "Peru no forno com arroz de ervilhas",
+                      "Mufete de carapau",
+                      "Bifes de frango com banana-pão e couve salteada"
+                ]
+          },
+          "2026-11-09": {
+                "options": [
+                      "Novilho estufado com arroz branco",
+                      "Corvina à portuguesa com batata e legumes",
+                      "Frango grelhado com banana-pão e vinagrete de tomate"
+                ]
+          },
+          "2026-11-10": {
+                "options": [
+                      "Lasanha de carne com salada",
+                      "Choco grelhado com arroz branco",
+                      "Bifes de atum com batata-doce e espinafres"
+                ]
+          },
+          "2026-11-12": {
+                "options": [
+                      "Entrecosto no forno com batata à padeiro e salada",
+                      "Bacalhau com natas e salada",
+                      "Cozido de peixe"
+                ]
+          },
+          "2026-11-13": {
+                "options": [
+                      "Carne de vaca estufada com vinho tinto e puré",
+                      "Medalhões de peixe com batata cozida e brócolos",
+                      "Peito de pato com mandioca e salada"
+                ]
+          },
+          "2026-11-16": {
+                "options": [
+                      "Rabo de boi estufado em vinho tinto com puré",
+                      "Peixe no forno com batata à padeiro e legumes salteados",
+                      "Espetada de frango com puré de abóbora"
+                ]
+          },
+          "2026-11-17": {
+                "options": [
+                      "Frango ao molho de vinho tinto com arroz branco",
+                      "Cozido à portuguesa",
+                      "Calafate grelhado com molho vinagrete, batata cozida e salada"
+                ]
+          },
+          "2026-11-18": {
+                "options": [
+                      "Espetada de carne",
+                      "Bifes de atum com molho de escabeche, batata-doce e salada",
+                      "Tiras de choco com mandioca e abóbora assada"
+                ]
+          },
+          "2026-11-19": {
+                "options": [
+                      "Pungo no forno com arroz branco",
+                      "Bitoque de novilho com ovo e batata frita",
+                      "Lombo de porco com puré de ervilhas"
+                ]
+          },
+          "2026-11-20": {
+                "options": [
+                      "Perna de peru no forno com arroz grego e cenoura laminada",
+                      "Arroz de marisco",
+                      "Bifes de frango com banana-pão e couve salteada"
+                ]
+          },
+          "2026-11-23": {
+                "options": [
+                      "Carne de vaca com cogumelos e natas e batata frita",
+                      "Pungo com batata e esparregado",
+                      "Bifes de frango com cuscuz e salada"
+                ]
+          },
+          "2026-11-24": {
+                "options": [
+                      "Frango no forno com molho de limão e batata frita",
+                      "Bacalhau com natas e salada mista",
+                      "Espetadas de peixe com batata-doce e espinafres"
+                ]
+          },
+          "2026-11-25": {
+                "options": [
+                      "Cabrito assado com arroz de enchidos",
+                      "Espetada de peixe e camarão",
+                      "Febras na chapa com inhame e brócolos"
+                ]
+          },
+          "2026-11-26": {
+                "options": [
+                      "Lasanha de carne",
+                      "Atum braseado com chips de batata-doce e legumes",
+                      "Tiras de novilho com mandioca e abóbora assada"
+                ]
+          },
+          "2026-11-27": {
+                "options": [
+                      "Entremeada grelhada com feijão e arroz branco",
+                      "Peixe lírio assado com batata a murro",
+                      "Peito de pato com banana-pão e couve refogada"
+                ]
+          },
+          "2026-11-30": {
+                "options": [
+                      "Churrasco de frango com batata frita e salada",
+                      "Pargo no forno com arroz de coentros, batata a vapor e salada",
+                      "Bife de novilho na chapa com mandioca e legumes mediterrâneos"
+                ]
+          }
+    };
+
     const buffetModal = document.getElementById("buffet-modal");
     const dateParts = Object.fromEntries(
       new Intl.DateTimeFormat("en-GB", {
@@ -732,9 +918,32 @@
       }).formatToParts(new Date()).filter(part => part.type !== "literal").map(part => [part.type, part.value])
     );
     const todayInLuanda = `${dateParts.year}-${dateParts.month}-${dateParts.day}`;
-    const buffetDismissedKey = `sandwix-buffet-${buffetDate}`;
+    const buffetToday = buffetMenus[todayInLuanda];
+    const buffetDismissedKey = `sandwix-buffet-${todayInLuanda}`;
     let buffetWasDismissed = false;
     try { buffetWasDismissed = localStorage.getItem(buffetDismissedKey) === "dismissed"; } catch (_) {}
+
+    const renderBuffet = (menu, date) => {
+      const dateLabel = date.split("-").reverse().join("/");
+      document.getElementById("buffet-date").textContent = `Buffet do dia · ${dateLabel}`;
+      document.getElementById("buffet-price").textContent = menu.price || "8.500 Kz";
+
+      const options = document.getElementById("buffet-description");
+      options.replaceChildren();
+      menu.options.forEach((option, index) => {
+        const item = document.createElement("li");
+        const number = document.createElement("span");
+        const label = document.createElement("span");
+        number.className = "buffet-option-number";
+        number.textContent = String(index + 1);
+        label.textContent = option;
+        item.append(number, label);
+        options.append(item);
+      });
+
+      document.getElementById("buffet-sides-title").textContent = menu.sidesTitle || "Acompanhamentos";
+      document.getElementById("buffet-sides").textContent = menu.sides || "Incluídos em cada opção, conforme descrito acima.";
+    };
 
     const closeBuffet = () => {
       buffetModal.hidden = true;
@@ -742,10 +951,13 @@
       try { localStorage.setItem(buffetDismissedKey, "dismissed"); } catch (_) {}
     };
 
-    if (todayInLuanda === buffetDate && !buffetWasDismissed) {
-      buffetModal.hidden = false;
-      document.body.classList.add("modal-open");
-      buffetModal.querySelector(".buffet-close").focus();
+    if (buffetToday) {
+      renderBuffet(buffetToday, todayInLuanda);
+      if (!buffetWasDismissed) {
+        buffetModal.hidden = false;
+        document.body.classList.add("modal-open");
+        buffetModal.querySelector(".buffet-close").focus();
+      }
     }
 
     buffetModal.querySelectorAll("[data-close-buffet]").forEach(button => button.addEventListener("click", closeBuffet));
